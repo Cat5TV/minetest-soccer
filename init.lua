@@ -34,6 +34,13 @@ local function reg_ball(color)
 				 and (math.abs(vel.z) < 0.1) then
 					vel.x = 0
 					vel.z = 0
+					self.count = (self.count or 0) + dtime
+				else self.count = 0
+				end
+				if self.count > 10 then
+					minetest.add_item(self.object:getpos(), "soccer:ball_"..color.."_item")
+					self.object:remove()
+					return
 				end
 				self.object:setvelocity(vel)
 				local pos = self.object:getpos()
